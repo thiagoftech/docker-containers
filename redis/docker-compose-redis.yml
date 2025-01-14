@@ -1,0 +1,19 @@
+version: '3.8' # Specify the Compose file version
+
+services:
+  redis:
+    image: redis:latest # Use the latest Redis image
+    container_name: redis-container # Optional name for the container
+    ports:
+      - "6379:6379" # Map Redis default port to the host
+    volumes:
+      - redis-data:/data # Persist Redis data
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"] # Example of custom Redis configuration
+
+volumes:
+  redis-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./data # Specify the host path for data
+      o: bind
